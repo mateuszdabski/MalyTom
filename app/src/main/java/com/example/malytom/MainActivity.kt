@@ -6,8 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
+import android.app.NotificationManager
+import android.app.NotificationChannel
+import android.os.Build
 
 class MainActivity : AppCompatActivity() {
+
+    //Defined the required values
+    companion object {
+        const val CHANNEL_ID = "simplified_coding"
+        private const val CHANNEL_NAME = "Simplified Coding"
+        private const val CHANNEL_DESC = "Android Push Notification Tutorial"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,5 +43,16 @@ class MainActivity : AppCompatActivity() {
                 textViewToken.text = token
 
             })
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            channel.description = CHANNEL_DESC
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.createNotificationChannel(channel)
+
+        }
     }
 }
