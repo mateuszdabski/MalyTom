@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "506540807684",
+    "firebase_url": "https://maly-tom.firebaseio.com",
+    "project_id": "maly-tom",
+    "storage_bucket": "maly-tom.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506540807684:android:8abd4eda7154ddc92e0751",
+        "android_client_info": {
+          "package_name": "com.example.malytom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "506540807684-fg8qnaa56q8mvckffvd9fo2gbghh6ih7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.malytom",
+            "certificate_hash": "832bebe34daa2c26021b41bb87b9629865ccee08"
+          }
+        },
+        {
+          "client_id": "506540807684-e2t6jv30n7lfbgau94itqd054n4jm3an.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADPykECMn74M_AxeWW5W_eEcNxc_gLBcM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "506540807684-e2t6jv30n7lfbgau94itqd054n4jm3an.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
