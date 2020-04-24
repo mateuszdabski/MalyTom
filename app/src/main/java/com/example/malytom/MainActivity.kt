@@ -9,6 +9,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.app.NotificationManager
 import android.app.NotificationChannel
 import android.os.Build
+import android.util.Log
+import android.content.Intent
+import android.net.Uri
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,6 +60,21 @@ class MainActivity : AppCompatActivity() {
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(channel)
 
+        }
+
+        //opening dashboard
+        buttonOpenDashboard.setOnClickListener {
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse("http://maly-tom.web.app")
+            startActivity(i)
+        }
+
+        //copying the token
+        buttonCopyToken.setOnClickListener {
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("token", textViewToken.text)
+            clipboard.primaryClip = clip
+            Toast.makeText(this@MainActivity, "Copied", Toast.LENGTH_LONG).show()
         }
     }
 }
