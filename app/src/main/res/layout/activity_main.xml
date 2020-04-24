@@ -45,7 +45,6 @@
             android:textAlignment="center"
             android:layout_centerInParent="true"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:text="7uug2rYyXSxVHJOMQDer3gAZUDhFYh4STO15sPzopWIbeHOkHJsI8BKwKEkhhBszMsyXYrQwkOOBu97q"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
