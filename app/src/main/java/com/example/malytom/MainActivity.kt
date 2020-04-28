@@ -16,6 +16,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private val APP_TOKEN = "APP_TOKEN"
     private val TAG_FIREBASE = "Firebase"
     lateinit var bAdapter: BluetoothAdapter
+    lateinit var fbAuth: FirebaseAuth
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var token: String? = null
 
@@ -42,9 +45,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        createOrRetrieveId(applicationContext)
-        initApp(applicationContext)
 
+
+        fbAuth = FirebaseAuth.getInstance()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
@@ -56,25 +59,13 @@ class MainActivity : AppCompatActivity() {
             manager.createNotificationChannel(channel)
 
         }
-
-        //opening dashboard
-        buttonOpenDashboard.setOnClickListener {
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse("http://maly-tom.web.app")
-            startActivity(i)
-        }
-
-        //copying the token
-        buttonCopyToken.setOnClickListener {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("token", textViewToken.text)
-            clipboard.primaryClip = clip
-            Toast.makeText(this@MainActivity, "Copied", Toast.LENGTH_LONG).show()
+        progressbar.visibility = View.INVISIBLE
+        buttonSignUp.setOnClickListener {
+            createUser()
         }
     }
 
-    @Synchronized
-    fun createOrRetrieveId(context: Context): String? {
+    private fun createOrRetrieveId(context: Context): String? {
         if (uniqueID == null) {
             val sharedPrefs = context.getSharedPreferences(
                 PREF_UNIQUE_ID, Context.MODE_PRIVATE
@@ -90,8 +81,7 @@ class MainActivity : AppCompatActivity() {
         return uniqueID
     }
 
-    @Synchronized
-    fun initApp(context: Context) {
+    private fun initApp(context: Context) {
         val pm: PackageManager = applicationContext.packageManager
         val hasBluetooth = pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)
         var btName = ""
@@ -108,7 +98,6 @@ class MainActivity : AppCompatActivity() {
             FirebaseInstanceId.getInstance().instanceId
                 .addOnCompleteListener(OnCompleteListener { task ->
                     if (!task.isSuccessful) {
-                        textViewToken.text = task.exception?.message
                         return@OnCompleteListener
                     }
                     token = task.result?.token
@@ -127,7 +116,6 @@ class MainActivity : AppCompatActivity() {
                     editor.putBoolean(APP_INIT, true)
                     editor.putString(APP_TOKEN, token)
                     editor.commit()
-                    setLayoutData()
                 })
         } else {
             // get FCM token and save bt name
@@ -136,13 +124,69 @@ class MainActivity : AppCompatActivity() {
                 .update("bluetooth", btName)
                 .addOnSuccessListener { Log.d(TAG_FIREBASE,"DocumentSnapshot added with ID: ") }
                 .addOnFailureListener { e -> Log.w(TAG_FIREBASE, "Error adding document", e) }
-            setLayoutData()
         }
     }
 
-    private fun setLayoutData() {
-        progressbar.visibility = View.INVISIBLE
-        textViewMessage.text = "Your FCM Token is:"
-        textViewToken.text = token
+    private fun createUser() {
+        val email: String = editTextEmail.text.toString().trim()
+        val password: String = editTextPassword.text.toString().trim()
+
+        if (email.isEmpty()){
+            editTextEmail.error = "Email required"
+            editTextEmail.requestFocus()
+            return
+        }
+        if (password.isEmpty()){
+            editTextPassword.error = "Password required"
+            editTextPassword.requestFocus()
+            return
+        }
+        if (password.length<6){
+            editTextPassword.error = "Password should be at least 6 characters long"
+            editTextPassword.requestFocus()
+            return
+        }
+
+        progressbar.visibility = View.VISIBLE
+        fbAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Log.d("Firebase", "createUserWithEmail:success")
+                    createOrRetrieveId(applicationContext)
+                    initApp(applicationContext)
+                    startProfileActivity()
+                } else {
+                    Log.w("Firebase", "createUserWithEmail:failure", task.exception);
+                    if (task.exception is FirebaseAuthUserCollisionException){
+                        userLogin(email, password)
+                    } else {
+                        progressbar.visibility = View.INVISIBLE
+                        Toast.makeText(baseContext, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+    }
+
+    private fun userLogin(email: String, password: String){
+        fbAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    createOrRetrieveId(applicationContext)
+                    initApp(applicationContext)
+                    startProfileActivity()
+                } else {
+                    progressbar.visibility = View.INVISIBLE
+                    Toast.makeText(baseContext, "Authentication failed.",
+                    Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun startProfileActivity(){
+        val i = Intent(this, ProfileActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        }
+        startActivity(i)
     }
 }
