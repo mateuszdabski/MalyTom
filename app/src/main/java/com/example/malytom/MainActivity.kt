@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
@@ -127,8 +128,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createUser() {
-        val email: String = editTextEmail.toString().trim()
-        val password: String = editTextPassword.toString().trim()
+        val email: String = editTextEmail.text.toString().trim()
+        val password: String = editTextPassword.text.toString().trim()
 
         if (email.isEmpty()){
             editTextEmail.error = "Email required"
@@ -150,11 +151,13 @@ class MainActivity : AppCompatActivity() {
         fbAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    Log.d("Firebase", "createUserWithEmail:success")
                     createOrRetrieveId(applicationContext)
                     initApp(applicationContext)
                     startProfileActivity()
                 } else {
-                    if (task.exception is FirebaseAuth ){
+                    Log.w("Firebase", "createUserWithEmail:failure", task.exception);
+                    if (task.exception is FirebaseAuthUserCollisionException){
                         userLogin(email, password)
                     } else {
                         progressbar.visibility = View.INVISIBLE
