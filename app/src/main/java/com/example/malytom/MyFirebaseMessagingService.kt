@@ -6,7 +6,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
         if (remoteMessage!!.notification != null) {
