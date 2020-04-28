@@ -37,9 +37,9 @@ class MainActivity : AppCompatActivity() {
 
     //Defined the required values
     companion object {
-        const val CHANNEL_ID = "simplified_coding"
-        private const val CHANNEL_NAME = "Simplified Coding"
-        private const val CHANNEL_DESC = "Android Push Notification Tutorial"
+        const val CHANNEL_ID = "test_notifications"
+        private const val CHANNEL_NAME = "Test Notifications"
+        private const val CHANNEL_DESC = "Testing push notifications"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
