@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : AppCompatActivity() {
     private var token: String? = null
+    private val NEWS = "News"
+    private val EVENTS = "Events"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +50,30 @@ class ProfileActivity : AppCompatActivity() {
             val clip = ClipData.newPlainText("token", textViewToken.text)
             clipboard.primaryClip = clip
             Toast.makeText(this@ProfileActivity, "Copied", Toast.LENGTH_LONG).show()
+        }
+
+        buttonNewsSubscribe.setOnClickListener {
+            FirebaseMessaging.getInstance().subscribeToTopic(NEWS).addOnSuccessListener {
+                Toast.makeText(this, "Subscribe Topic: $NEWS", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        buttonNewsUnsubscribe.setOnClickListener {
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(NEWS).addOnSuccessListener {
+                Toast.makeText(this, "Unsubscribe Topic: $NEWS", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        buttonEventsSubscribe.setOnClickListener {
+            FirebaseMessaging.getInstance().subscribeToTopic(EVENTS).addOnSuccessListener {
+                Toast.makeText(this, "Subscribe Topic: $EVENTS", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        buttonEventsUnsubscribe.setOnClickListener {
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(EVENTS).addOnSuccessListener {
+                Toast.makeText(this, "Unsubscribe Topic: $EVENTS", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

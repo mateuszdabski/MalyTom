@@ -8,65 +8,163 @@
     tools:context=".ProfileActivity">
 
 
-    <TextView
-        android:textSize="42sp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:text="Android Push Notification Test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:id="@+id/textView" app:fontFamily="sans-serif-thin"/>
+        android:layout_marginTop="36dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/textViewNews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="News"
+                android:textAlignment="center"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/buttonNewsSubscribe"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:background="@color/colorPrimary"
+                android:text="Subscribe"
+                android:textAllCaps="false" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.2" />
+
+            <Button
+                android:id="@+id/buttonNewsUnsubscribe"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center_horizontal"
+                android:layout_marginTop="12dp"
+                android:background="@color/colorPrimary"
+                android:text="Unsubscribe"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/textViewEvents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Events"
+                android:textAlignment="center"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/buttonEventsSubscribe"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:background="@color/colorPrimary"
+                android:text="Subscribe"
+                android:textAllCaps="false" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.2" />
+
+            <Button
+                android:id="@+id/buttonEventsUnsubscribe"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:background="@color/colorPrimary"
+                android:text="Unsubscribe"
+                android:textAllCaps="false" />
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonOpenDashboard"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
 
         <ProgressBar
             android:id="@+id/progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_marginBottom="8dp" />
 
         <TextView
-            android:text="Please wait until you see the token here"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_horizontal"
             android:id="@+id/textViewMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:text="Please wait until you see the token here"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/textViewToken"
-            android:textAlignment="center"
-            android:layout_centerInParent="true"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         <Button
             android:id="@+id/buttonCopyToken"
-            android:layout_gravity="center_horizontal"
-            android:textAllCaps="false"
-            android:layout_marginTop="12dp"
-            android:text="Copy Token"
-            android:background="@color/colorPrimary"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"/>
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:background="@color/colorPrimary"
+            android:text="Copy Token"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 
     <Button
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:textAllCaps="false"
-        android:text="Open Dashboard"
         android:id="@+id/buttonOpenDashboard"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:text="Open Dashboard"
+        android:textAllCaps="false" />
 
 
 </RelativeLayout>
