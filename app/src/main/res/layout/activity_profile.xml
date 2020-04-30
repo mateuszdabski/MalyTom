@@ -41,25 +41,23 @@
             <Button
                 android:id="@+id/buttonNewsSubscribe"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="12dp"
-                android:background="@color/colorPrimary"
                 android:text="Subscribe"
                 android:textAllCaps="false" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="0.2" />
+                android:layout_weight="0.1" />
 
             <Button
                 android:id="@+id/buttonNewsUnsubscribe"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="right|center_horizontal"
                 android:layout_marginTop="12dp"
-                android:background="@color/colorPrimary"
                 android:text="Unsubscribe"
                 android:textAllCaps="false" />
         </LinearLayout>
@@ -89,25 +87,23 @@
             <Button
                 android:id="@+id/buttonEventsSubscribe"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="12dp"
-                android:background="@color/colorPrimary"
                 android:text="Subscribe"
                 android:textAllCaps="false" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="0.2" />
+                android:layout_weight="0.1" />
 
             <Button
                 android:id="@+id/buttonEventsUnsubscribe"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="12dp"
-                android:background="@color/colorPrimary"
                 android:text="Unsubscribe"
                 android:textAllCaps="false" />
         </LinearLayout>
@@ -136,10 +132,9 @@
             <Button
                 android:id="@+id/buttonOfflineNotification"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="12dp"
-                android:background="@color/colorPrimary"
                 android:text="Boom"
                 android:textAllCaps="false" />
         </LinearLayout>
@@ -179,10 +174,9 @@
         <Button
             android:id="@+id/buttonCopyToken"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="12dp"
-            android:background="@color/colorPrimary"
             android:text="Copy Token"
             android:textAllCaps="false" />
 
