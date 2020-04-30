@@ -112,6 +112,19 @@ class ProfileActivity : AppCompatActivity() {
             SystemClock.elapsedRealtime() + 20 * 1000,
             alarmIntent
         )
+
+//        val calendar: Calendar = Calendar.getInstance().apply {
+//            timeInMillis = System.currentTimeMillis()
+//            set(Calendar.HOUR_OF_DAY, 14)
+//            set(Calendar.MINUTE, 45)
+//        }
+//
+//        alarmManager.setInexactRepeating(
+//            AlarmManager.RTC_WAKEUP,
+//            calendar.timeInMillis,
+//            AlarmManager.INTERVAL_DAY,
+//            alarmIntent
+//        )
     }
 
     private fun getNotification(content: String): Notification {
