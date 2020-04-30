@@ -111,6 +111,38 @@
                 android:text="Unsubscribe"
                 android:textAllCaps="false" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/textViewOfflineNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Offline Notification in 30 seconds"
+                android:textAlignment="center"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/buttonOfflineNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:background="@color/colorPrimary"
+                android:text="Boom"
+                android:textAllCaps="false" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

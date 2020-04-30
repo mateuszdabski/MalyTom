@@ -1,18 +1,26 @@
 package com.example.malytom
 
+import android.app.AlarmManager
+import android.app.Notification
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.icu.util.Calendar
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_profile.*
+
 
 class ProfileActivity : AppCompatActivity() {
     private var token: String? = null
@@ -35,7 +43,6 @@ class ProfileActivity : AppCompatActivity() {
                 token = task.result?.token
                 setLayoutData()
             })
-        FirebaseMessaging.getInstance().subscribeToTopic("temtest")
 
         //opening dashboard
         buttonOpenDashboard.setOnClickListener {
@@ -75,11 +82,43 @@ class ProfileActivity : AppCompatActivity() {
                 Toast.makeText(this, "Unsubscribe Topic: $EVENTS", Toast.LENGTH_SHORT).show()
             }
         }
+
+        buttonOfflineNotification.setOnClickListener {
+            scheduleNotification()//getNotification ("Time Notification"))
+            Toast.makeText(this@ProfileActivity, "Notification Set", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun setLayoutData() {
         progressbar.visibility = View.INVISIBLE
         textViewMessage.text = "Your FCM Token is:"
         textViewToken.text = token
+    }
+
+    private fun scheduleNotification() {
+        val notificationIntent = Intent(this, MyNotificationPublisher::class.java)
+        val alarmIntent = PendingIntent.getBroadcast(
+            this,
+            0,
+            notificationIntent,
+            0
+        )
+
+        val alarmManager =
+            applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        alarmManager.set(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + 20 * 1000,
+            alarmIntent
+        )
+    }
+
+    private fun getNotification(content: String): Notification {
+        val channels = getSystemService(NotificationManager::class.java).notificationChannels
+        return NotificationCompat.Builder(this, channels[0].id)
+            .setContentTitle("Scheduled Notification")
+            .setContentText(content)
+            .build()
     }
 }
