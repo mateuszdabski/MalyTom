@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -154,6 +155,12 @@ class MainActivity : AppCompatActivity() {
                     Log.d("Firebase", "createUserWithEmail:success")
                     createOrRetrieveId(applicationContext)
                     initApp(applicationContext)
+                    FirebaseMessaging.getInstance().subscribeToTopic("temtest").addOnSuccessListener {
+                        Toast.makeText(this, "Subscribe Topic: temtest", Toast.LENGTH_SHORT).show()
+                    }
+                    FirebaseMessaging.getInstance().subscribeToTopic("Settings").addOnSuccessListener {
+                        Toast.makeText(this, "Subscribe Topic: Settings", Toast.LENGTH_SHORT).show()
+                    }
                     startProfileActivity()
                 } else {
                     Log.w("Firebase", "createUserWithEmail:failure", task.exception);
