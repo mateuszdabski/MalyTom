@@ -84,8 +84,8 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         buttonOfflineNotification.setOnClickListener {
-            scheduleNotification()//getNotification ("Time Notification"))
-            Toast.makeText(this@ProfileActivity, "Notification Set", Toast.LENGTH_LONG).show()
+            //scheduleNotification()
+            Toast.makeText(this@ProfileActivity, "This feature is turned off", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -125,13 +125,5 @@ class ProfileActivity : AppCompatActivity() {
 //            AlarmManager.INTERVAL_DAY,
 //            alarmIntent
 //        )
-    }
-
-    private fun getNotification(content: String): Notification {
-        val channels = getSystemService(NotificationManager::class.java).notificationChannels
-        return NotificationCompat.Builder(this, channels[0].id)
-            .setContentTitle("Scheduled Notification")
-            .setContentText(content)
-            .build()
     }
 }
