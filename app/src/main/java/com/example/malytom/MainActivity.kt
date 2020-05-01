@@ -158,9 +158,6 @@ class MainActivity : AppCompatActivity() {
                     Log.d("Firebase", "createUserWithEmail:success")
                     createOrRetrieveId(applicationContext)
                     initApp(applicationContext)
-                    FirebaseMessaging.getInstance().subscribeToTopic("temtest").addOnSuccessListener {
-                        Toast.makeText(this, "Subscribe Topic: temtest", Toast.LENGTH_SHORT).show()
-                    }
                     FirebaseMessaging.getInstance().subscribeToTopic("Settings").addOnSuccessListener {
                         Toast.makeText(this, "Subscribe Topic: Settings", Toast.LENGTH_SHORT).show()
                     }
