@@ -164,6 +164,7 @@ class MainActivity : AppCompatActivity() {
                     FirebaseMessaging.getInstance().subscribeToTopic("Settings").addOnSuccessListener {
                         Toast.makeText(this, "Subscribe Topic: Settings", Toast.LENGTH_SHORT).show()
                     }
+                    OfflineNotificationHelper.updateNotification(applicationContext)
                     startProfileActivity()
                 } else {
                     Log.w("Firebase", "createUserWithEmail:failure", task.exception);
