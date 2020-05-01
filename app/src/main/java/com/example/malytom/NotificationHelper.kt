@@ -26,8 +26,8 @@ object NotificationHelper {
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
 
-        val mNotificationMgr = NotificationManagerCompat.from(context)
-        mNotificationMgr.notify(1, mBuilder.build())
+        NotificationManagerCompat.from(context)
+            .notify(1, mBuilder.build())
 
     }
 

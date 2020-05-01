@@ -3,12 +3,9 @@ package com.example.malytom
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.bluetooth.BluetoothAdapter
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -25,34 +22,34 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    private var uniqueID: String? = null
-    private val PREF_UNIQUE_ID = "PREF_UNIQUE_ID"
-    private val APP_SETTINGS = "APP_SETTINGS"
-    private val APP_INIT = "APP_INIT"
-    private val APP_TOKEN = "APP_TOKEN"
-    private val TAG_FIREBASE = "Firebase"
-    lateinit var bAdapter: BluetoothAdapter
-    lateinit var fbAuth: FirebaseAuth
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private var token: String? = null
 
-    //Defined the required values
     companion object {
+        private const val PREF_UNIQUE_ID: String = "PREF_UNIQUE_ID"
+        private const val APP_SETTINGS: String = "APP_SETTINGS"
+        private const val APP_INIT: String = "APP_INIT"
+        private const val APP_TOKEN: String = "APP_TOKEN"
+        private const val TAG_FIREBASE: String = "Firebase"
         const val CHANNEL_ID = "test_notifications"
         private const val CHANNEL_NAME = "Test Notifications"
         private const val CHANNEL_DESC = "Testing push notifications"
+
         var OFF_NOTIFICATION_TITLE = "To już czas"
         var OFF_NOTIFICATION_MESSAGE = "Czas na zimnego browarka"
-        var OFF_NOTIFICATION_TIME = "12:00"
+        var OFF_NOTIFICATION_TIME = "13:39"
     }
+
+
+    lateinit var bAdapter: BluetoothAdapter
+    lateinit var fbAuth: FirebaseAuth
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private var uniqueID: String? = null
+    private var token: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        val fbUser = FirebaseAuth.getInstance().currentUser
-        if (fbUser != null) {
+        if (FirebaseAuth.getInstance().currentUser != null) {
             startProfileActivity()
         }
 
@@ -117,9 +114,19 @@ class MainActivity : AppCompatActivity() {
                     user["bluetooth"] = btName
                     db.collection("Users").document(uniqueID!!)
                         .set(user)
-                        .addOnSuccessListener { Log.d(TAG_FIREBASE,"DocumentSnapshot added with ID: ") }
-                        .addOnFailureListener { e -> Log.w(TAG_FIREBASE, "Error adding document", e) }
-
+                        .addOnSuccessListener {
+                            Log.d(
+                                TAG_FIREBASE,
+                                "DocumentSnapshot added with ID: "
+                            )
+                        }
+                        .addOnFailureListener { e ->
+                            Log.w(
+                                TAG_FIREBASE,
+                                "Error adding document",
+                                e
+                            )
+                        }
                     // save data locally
                     val editor = sharedPrefs.edit()
                     editor.putBoolean(APP_INIT, true)
@@ -131,7 +138,7 @@ class MainActivity : AppCompatActivity() {
             token = sharedPrefs.getString(APP_TOKEN, null)
             db.collection("Users").document(uniqueID!!)
                 .update("bluetooth", btName)
-                .addOnSuccessListener { Log.d(TAG_FIREBASE,"DocumentSnapshot added with ID: ") }
+                .addOnSuccessListener { Log.d(TAG_FIREBASE, "DocumentSnapshot added with ID: ") }
                 .addOnFailureListener { e -> Log.w(TAG_FIREBASE, "Error adding document", e) }
         }
     }
@@ -140,17 +147,17 @@ class MainActivity : AppCompatActivity() {
         val email: String = editTextEmail.text.toString().trim()
         val password: String = editTextPassword.text.toString().trim()
 
-        if (email.isEmpty()){
+        if (email.isEmpty()) {
             editTextEmail.error = "Email required"
             editTextEmail.requestFocus()
             return
         }
-        if (password.isEmpty()){
+        if (password.isEmpty()) {
             editTextPassword.error = "Password required"
             editTextPassword.requestFocus()
             return
         }
-        if (password.length<6){
+        if (password.length < 6) {
             editTextPassword.error = "Password should be at least 6 characters long"
             editTextPassword.requestFocus()
             return
@@ -163,25 +170,29 @@ class MainActivity : AppCompatActivity() {
                     Log.d("Firebase", "createUserWithEmail:success")
                     createOrRetrieveId(applicationContext)
                     initApp(applicationContext)
-                    FirebaseMessaging.getInstance().subscribeToTopic("Settings").addOnSuccessListener {
-                        Toast.makeText(this, "Subscribe Topic: Settings", Toast.LENGTH_SHORT).show()
-                    }
+                    FirebaseMessaging.getInstance().subscribeToTopic("Settings")
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Subscribe Topic: Settings", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     OfflineNotificationHelper.updateNotification(applicationContext)
                     startProfileActivity()
                 } else {
-                    Log.w("Firebase", "createUserWithEmail:failure", task.exception);
-                    if (task.exception is FirebaseAuthUserCollisionException){
+                    Log.w("Firebase", "createUserWithEmail:failure", task.exception)
+                    if (task.exception is FirebaseAuthUserCollisionException) {
                         userLogin(email, password)
                     } else {
                         progressbar.visibility = View.INVISIBLE
-                        Toast.makeText(baseContext, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            baseContext, "Authentication failed.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
     }
 
-    private fun userLogin(email: String, password: String){
+    private fun userLogin(email: String, password: String) {
         fbAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -190,13 +201,15 @@ class MainActivity : AppCompatActivity() {
                     startProfileActivity()
                 } else {
                     progressbar.visibility = View.INVISIBLE
-                    Toast.makeText(baseContext, "Authentication failed.",
-                    Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
     }
 
-    private fun startProfileActivity(){
+    private fun startProfileActivity() {
         val i = Intent(this, ProfileActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }

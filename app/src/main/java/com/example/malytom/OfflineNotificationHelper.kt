@@ -1,13 +1,10 @@
 package com.example.malytom
+
 import android.app.AlarmManager
-import android.content.Context
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
-import android.os.SystemClock
-import android.util.Log
 
 object OfflineNotificationHelper {
 
@@ -22,11 +19,7 @@ object OfflineNotificationHelper {
         )
         val alarmManager =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-//        alarmManager.set(
-//            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-//            SystemClock.elapsedRealtime() + 20 * 1000,
-//            alarmIntent
-//        )
+
         val hAndM = MainActivity.OFF_NOTIFICATION_TIME.split(":")
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
@@ -41,5 +34,4 @@ object OfflineNotificationHelper {
             alarmIntent
         )
     }
-
 }

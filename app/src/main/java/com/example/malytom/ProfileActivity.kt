@@ -1,32 +1,29 @@
 package com.example.malytom
 
 import android.app.AlarmManager
-import android.app.Notification
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.icu.util.Calendar
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
 import android.widget.Toast
-import androidx.core.app.NotificationCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_profile.*
 
-
 class ProfileActivity : AppCompatActivity() {
-    private var token: String? = null
-    private val NEWS = "News"
-    private val EVENTS = "Events"
+    companion object {
+        private const val NEWS = "News"
+        private const val EVENTS = "Events"
+    }
 
+    private var token: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,8 +51,7 @@ class ProfileActivity : AppCompatActivity() {
         //copying the token
         buttonCopyToken.setOnClickListener {
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("token", textViewToken.text)
-            clipboard.primaryClip = clip
+            clipboard.primaryClip = ClipData.newPlainText("token", textViewToken.text)
             Toast.makeText(this@ProfileActivity, "Copied", Toast.LENGTH_LONG).show()
         }
 
@@ -85,7 +81,8 @@ class ProfileActivity : AppCompatActivity() {
 
         buttonOfflineNotification.setOnClickListener {
             //scheduleNotification()
-            Toast.makeText(this@ProfileActivity, "This feature is turned off", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@ProfileActivity, "This feature is turned off", Toast.LENGTH_LONG)
+                .show()
         }
     }
 
@@ -112,18 +109,5 @@ class ProfileActivity : AppCompatActivity() {
             SystemClock.elapsedRealtime() + 20 * 1000,
             alarmIntent
         )
-
-//        val calendar: Calendar = Calendar.getInstance().apply {
-//            timeInMillis = System.currentTimeMillis()
-//            set(Calendar.HOUR_OF_DAY, 14)
-//            set(Calendar.MINUTE, 45)
-//        }
-//
-//        alarmManager.setInexactRepeating(
-//            AlarmManager.RTC_WAKEUP,
-//            calendar.timeInMillis,
-//            AlarmManager.INTERVAL_DAY,
-//            alarmIntent
-//        )
     }
 }
