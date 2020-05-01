@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity() {
         const val CHANNEL_ID = "test_notifications"
         private const val CHANNEL_NAME = "Test Notifications"
         private const val CHANNEL_DESC = "Testing push notifications"
+        var OFF_NOTIFICATION_TITLE = "To już czas"
+        var OFF_NOTIFICATION_MESSAGE = "Czas na zimnego browarka"
+        var OFF_NOTIFICATION_TIME = "12:00"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
